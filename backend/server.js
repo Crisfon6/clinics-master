@@ -1,51 +1,56 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
 const clinic = require("./routes/clinic");
 const inventory = require("./routes/inventory");
+const user = require("./routes/user");
+const employee = require("./routes/employee");
 
 class Server {
-  constructor(routes) {
-    this.app = express();
-    this.port = process.env.PORT || 3001;
-    this.connectDB();
-    this.routes(routes);
-    this.middlewares();
-  }
+    constructor(routes) {
+        this.app = express();
+        this.port = process.env.PORT || 3001;
 
-  connectDB() {
-    mongoose
-      .connect("mongodb://localhost:27017/equiposMedicos", {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-      })
-      .then(() => console.log("Conexión con MongoDB: ON"))
-      .catch((error) => console.log("Error al conectar con MongoDB: " + error));
-  }
+        this.routes(routes);
+        this.middlewares();
+        //this.connectDB();
+    }
 
-  middlewares() {
-    this.app.use(express.json());
-  }
+    connectDB() {
+        mongoose
+            .connect("mongodb://localhost:27017/equiposMedicos", {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                useFindAndModify: false,
+                useCreateIndex: true,
+            })
+            .then(() => console.log("Conexión con MongoDB: ON"))
+            .catch((error) => console.log("Error al conectar con MongoDB: " + error));
+    }
 
-  routes(routes) {
-    routes.forEach((route) => {
-      this.app.use(route.path, route.controller);
-    });
-    // this.app.use("/api/user");
-    // importar rutas
-  }
+    middlewares() {
+        this.app.use(express.json());
+    }
 
-  listen() {
-    this.app.listen(this.port, () =>
-      console.log("Servidor ejecuta en puerto: " + this.port)
-    );
-  }
+    routes(routes) {
+        routes.forEach((route) => {
+            this.app.use(route.path, route.controller);
+        });
+    }
+
+    listen() {
+        this.app.listen(this.port, () =>
+            console.log("Servidor ejecuta en puerto: " + this.port)
+        );
+    }
 }
 routes = [
-  { path: "/api/clinic/", controller: clinic },
-  { path: "/api/inventory/", controller: inventory },
+    { path: "/api/clinic", controller: clinic },
+    { path: "/api/inventory", controller: inventory },
+    { path: "/api/users", controller: user },
+    { path: "/api/emloyee", controller: employee },
 ];
 const server = new Server(routes);
 // module.exports = server;
 server.listen();
+server.connectDB();
