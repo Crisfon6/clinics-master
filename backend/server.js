@@ -1,13 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const user = require("./routes/user");
+const employee = require("./routes/employee");
 
 class Server {
   constructor(routes) {
     this.app = express();
     this.port = process.env.PORT || 3001;
-    this.connectDB();
+ 
     this.routes(routes);
     this.middlewares();
+    //this.connectDB();
   }
 
   connectDB() {
@@ -40,7 +43,9 @@ class Server {
     );
   }
 }
-routes = [ {path: "api/user" , controller : <"route que trabajaron">} ];
+routes = [ {path: "/api/users" , controller :user },
+            {path: "/api/emloyee" , controller :employee} ];
 const server = new Server(routes);
 // module.exports = server;
 server.listen();
+server.connectDB();

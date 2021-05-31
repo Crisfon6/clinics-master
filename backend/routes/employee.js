@@ -2,15 +2,15 @@ const express = require("express");
 const router = express.Router();
 const Employee = require("../models/employee");
 const User = require("../models/user");
-const Role = require("../models/role");
+//const Role = require("../models/role");
 
 router.post("/registerEmployee",async(req,res)=>{
 
     const user = await User.findById(req.user.id);
     if(!user) return res.status(401).send("This User doesn't exist");
 
-    const role = await Role.findById(user.role)
-    if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
+    //const role = await Role.findById(user.role)
+    //if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
 
     let employee = new Employee({
         userId:req.body.userId,
@@ -42,8 +42,8 @@ router.get("/getEmployees",async(req,res)=>{
     const user = await User.findById(req.user.id);
     if(!user) return res.status(401).send("This User doesn't exist");
 
-    const role = await Role.findById(user.role)
-    if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
+    //const role = await Role.findById(user.role)
+    //if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
 
     const employees = await Employee.aggregate( 
         {
