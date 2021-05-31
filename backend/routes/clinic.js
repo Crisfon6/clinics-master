@@ -19,14 +19,14 @@ router.post("/saveClinic", Auth, async (res, req) => {
   return res.status(200).send({ result });
 });
 //list clinics
-router.get("listClinic", Auth, async (res, req) => {
+router.get("/listClinic", Auth, async (res, req) => {
   const user = await User.findById(req.user._id);
   if (!user) return res.status(400).send("Usuario no autenticado");
   const clinic = await Clinic.find({ userId: req.user._id });
   return res.status(200).send({ clinic });
 });
 
-router.put("updateClinic", Auth, async (req, res) => {
+router.put("/updateClinic", Auth, async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) return res.status(401).send("El user no exite en db");
   const clinic = await Board.findByIdAndUpdate(req.body._id, {
@@ -47,8 +47,4 @@ router.delete("/:_id", Auth, async (req, res) => {
   return res.status(200).send({ mensaje: "clinic Deleted" });
 });
 
-const findUser = (_idUser) => {
-  //findUser(eq.user._id);
-  const user = await User.findById(_idUser);
-  if (!user) return res.status(400).send("Usuario no autenticado");
-};
+module.exports = router;

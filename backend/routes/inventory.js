@@ -50,7 +50,6 @@ router.put("/updateInventory", Auth, async (req, res) => {
   return res.status(200).send({ inventory });
 });
 
-//eliminar tarea
 router.delete("/:_id", Auth, async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) return res.status(401).send("El user no exite en db");

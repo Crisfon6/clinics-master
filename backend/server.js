@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const clinic = require("./routes/clinic");
 
 class Server {
   constructor(routes) {
@@ -27,7 +28,7 @@ class Server {
   }
 
   routes(routes) {
-    routes.forEach(route => {
+    routes.forEach((route) => {
       this.app.use(route.path, route.controller);
     });
     // this.app.use("/api/user");
@@ -40,7 +41,7 @@ class Server {
     );
   }
 }
-routes = [ {path: "api/user" , controller : <"route que trabajaron">} ];
+routes = [{ path: "/api/clinic/", controller: clinic }];
 const server = new Server(routes);
 // module.exports = server;
 server.listen();
