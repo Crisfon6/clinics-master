@@ -5,6 +5,8 @@ const clinic = require("./routes/clinic");
 const inventory = require("./routes/inventory");
 const user = require("./routes/user");
 const employee = require("./routes/employee");
+const history = require("./routes/history");
+const equipment = require("./routes/equipment");
 
 class Server {
     constructor(routes) {
@@ -45,7 +47,10 @@ class Server {
     }
 }
 routes = [
+    { path: "/api/equipment", controller: equipment },
+    { path: "/api/role", controller: role },
     { path: "/api/clinic", controller: clinic },
+    { path: "/api/history", controller: history },
     { path: "/api/inventory", controller: inventory },
     { path: "/api/users", controller: user },
     { path: "/api/emloyee", controller: employee },
