@@ -24,7 +24,7 @@ userSchema.methods.generateJWT=function(){
         name:this.name,
         iat:moment().unix()
     },
-    "BioMaster")
+    "routesLogin")
 }
 
 const User = mongoose.model("user",userSchema);

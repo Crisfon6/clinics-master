@@ -5,15 +5,17 @@ const clinic = require("./routes/clinic");
 const inventory = require("./routes/inventory");
 const user = require("./routes/user");
 const employee = require("./routes/employee");
+const role = require("./routes/role");
+const auth = require("./routes/login");
+const equipment = require("./routes/equipment");
 
 class Server {
     constructor(routes) {
         this.app = express();
-        this.port = process.env.PORT || 3001;
-
-        this.routes(routes);
         this.middlewares();
-        //this.connectDB();
+        this.routes(routes);
+        this.port = process.env.PORT || 3001;
+        this.connectDB();
     }
 
     connectDB() {
@@ -45,12 +47,14 @@ class Server {
     }
 }
 routes = [
-    { path: "/api/clinic", controller: clinic },
-    { path: "/api/inventory", controller: inventory },
-    { path: "/api/users", controller: user },
-    { path: "/api/emloyee", controller: employee },
+    { path: "/api/clinic/", controller: clinic },
+    { path: "/api/inventory/", controller: inventory },
+    { path: "/api/users/", controller: user },
+    { path: "/api/role/", controller: role},
+    { path: "/api/emloyee/", controller: employee },
+    { path: "/api/auth/", controller: auth},
+    { path: "/api/equipment", controller: equipment}
 ];
+
 const server = new Server(routes);
-// module.exports = server;
 server.listen();
-server.connectDB();

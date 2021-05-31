@@ -3,7 +3,7 @@ const router = express.Router();
 const Auth = require("../middleware/auth");
 const Clinic = require("../models/clinic");
 const Inventory = require("../models/inventory");
-const Equipment = require("../models/Equipment");
+// const Equipment = require("../models/Equipment");
 const User = require("../models/user");
 
 router.post("/saveInventory", Auth, async (req, res) => {

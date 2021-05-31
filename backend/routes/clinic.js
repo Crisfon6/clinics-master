@@ -5,7 +5,7 @@ const User = require("../models/user");
 const Auth = require("../middleware/auth");
 
 //create clinic
-router.post("/saveClinic", Auth, async (res, req) => {
+router.post("/saveClinic", Auth, async (req, res) => {
   const user = await User.findById(req.user._id);
   if (!user) return res.status(400).send("Usuario no autenticado");
 

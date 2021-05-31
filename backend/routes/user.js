@@ -3,10 +3,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-
+const Auth = require("../middleware/auth");
 
 /*Function to register new user, cheking  whether the user already exists*/
-router.post("/registerUser",async(req,res)=>{
+router.post("/registerUser", Auth, async(req,res)=>{
     //validating unique eMAIL
     console.log(User)
     let user = await User.findOne({email:req.body.email});
@@ -22,7 +22,7 @@ router.post("/registerUser",async(req,res)=>{
         email:req.body.email,
         password:hash,
         phone:req.body.phone,
-        role:req.body.status
+        role:req.body.role
     })
 
     //saving user
@@ -40,7 +40,7 @@ router.post("/registerUser",async(req,res)=>{
 });
 
 
-router.put("/updateUser",async(req,res)=>{
+router.put("/updateUser", Auth, async(req,res)=>{
 
     const user = await User.findById(req.user.id);
     if(!user) return res.status(401).send("This User doesn't exist");

@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Employee = require("../models/employee");
 const User = require("../models/user");
+const Auth = require("../middleware/auth");
 //const Role = require("../models/role");
 
-router.post("/registerEmployee",async(req,res)=>{
-
-    const user = await User.findById(req.user.id);
+router.post("/registerEmployee", Auth, async(req,res)=>{
+    const user = await User.findById(req.body.userId);
     if(!user) return res.status(401).send("This User doesn't exist");
 
     //const role = await Role.findById(user.role)
@@ -22,7 +22,7 @@ router.post("/registerEmployee",async(req,res)=>{
    return result?res.status(200).send("Employee Registred Succesfully"):res.status(401).send("Error Registering Employee")
 })
 
-router.put("/updatingEmployee",async(req,res)=>{
+router.put("/updatingEmployee", Auth, async(req,res)=>{
 
     const user = await User.findById(req.user._id);
     if(!user) return res.status(401).send("This user doesn't exist");
