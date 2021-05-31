@@ -4,7 +4,7 @@
   "description": "Equipos Medicos",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "author": "Colombia-Tech",
   "license": "ISC",

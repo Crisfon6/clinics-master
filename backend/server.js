@@ -6,6 +6,8 @@ class Server {
     this.app = express();
     this.port = process.env.PORT || 3001;
     this.connectDB();
+    this.routes();
+    this.middlewares();
   }
 
   connectDB() {
@@ -26,6 +28,7 @@ class Server {
 
   routes() {
     this.app.use("/api/user");
+    // 
   }
 
   listen() {
@@ -34,6 +37,6 @@ class Server {
     );
   }
 }
-
 const server = new Server();
+// module.exports = server;
 server.listen();
