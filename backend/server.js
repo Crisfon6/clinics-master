@@ -52,7 +52,7 @@ routes = [
     { path: "/api/inventory/", controller: inventory },
     { path: "/api/users/", controller: user },
     { path: "/api/role/", controller: role},
-    { path: "/api/emloyee/", controller: employee },
+    { path: "/api/employee/", controller: employee },
     { path: "/api/auth/", controller: auth},
     { path: "/api/equipment/", controller: equipment},
     { path: "/api/history/", controller: history },

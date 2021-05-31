@@ -37,32 +37,31 @@ router.put("/updatingEmployee", Auth, async(req,res)=>{
 
 })
 
-router.get("/getEmployees",async(req,res)=>{
+router.get("/getEmployees", Auth, async(req,res)=>{
 
-    const user = await User.findById(req.user.id);
+    const user = await User.findById(req.user._id);
     if(!user) return res.status(401).send("This User doesn't exist");
 
     //const role = await Role.findById(user.role)
     //if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
 
-    const employees = await Employee.aggregate( 
-        {
-        $match:{active:true}
-    },
-    {
-        $lookup:{
-            from:"user",
-            localField:"userId",
-            foreignField:"_id",
-            as:"user"
+    const employees = await User.aggregate(
+        [{
+            $match:{}
         },
-    })
+        {
+            $lookup:{
+                from:"user",
+                localField:"userId",
+                foreignField:"_id",
+                as:"userId"
+            },
+        }    
+    ]
+    )
 
     if(!employees) return res.status(401).send("Error Searching Employees")
     return res.status(200).send({employees})
-
-
-    
 })
 
 

@@ -8,7 +8,6 @@ const Auth = require("../middleware/auth");
 /*Function to register new user, cheking  whether the user already exists*/
 router.post("/registerUser", Auth, async(req,res)=>{
     //validating unique eMAIL
-    console.log(User)
     let user = await User.findOne({email:req.body.email});
     if (user) return res.status(400).send("This user already exists");
 

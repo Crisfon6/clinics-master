@@ -3,7 +3,7 @@ const router = express.Router();
 const Auth = require("../middleware/auth");
 const Clinic = require("../models/clinic");
 const Inventory = require("../models/inventory");
-// const Equipment = require("../models/Equipment");
+const Equipment = require("../models/equipment");
 const User = require("../models/user");
 
 router.post("/saveInventory", Auth, async(req, res) => {
@@ -11,15 +11,15 @@ router.post("/saveInventory", Auth, async(req, res) => {
 
     if (!user) return res.status(400).send("Usuario no autenticado");
 
-    const clinic = await Clinic.findById(req.clinic._id);
+    const clinic = await Clinic.findById(req.body.clinicID);
     if (!clinic) return res.status(400).send("Clinica no encontrada");
 
-    const equipment = await Equipment.findById(req.equipment._id);
-    if (!equipment) return res.status(400).send("equipamento no encontrada");
+    // const equipment = await Equipment.findById(req.body.equipmentID);
+    // if (!equipment) return res.status(400).send("equipamento no encontrada");
 
     const inventory = new Inventory({
-        equipmentID: req.equipment._id,
-        clinicID: req.clinic._id,
+        equipmentID: req.body.equipmentID,
+        clinicID: req.body.clinicID,
         active: true,
     });
     const result = await inventory.save();
