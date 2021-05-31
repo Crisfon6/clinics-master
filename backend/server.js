@@ -7,6 +7,7 @@ const user = require("./routes/user");
 const employee = require("./routes/employee");
 const role = require("./routes/role");
 const auth = require("./routes/login");
+const history = require("./routes/history");
 const equipment = require("./routes/equipment");
 
 class Server {
@@ -53,7 +54,8 @@ routes = [
     { path: "/api/role/", controller: role},
     { path: "/api/emloyee/", controller: employee },
     { path: "/api/auth/", controller: auth},
-    { path: "/api/equipment", controller: equipment}
+    { path: "/api/equipment/", controller: equipment},
+    { path: "/api/history/", controller: history },
 ];
 
 const server = new Server(routes);
