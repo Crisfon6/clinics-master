@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const clinic = require("./routes/clinic");
+const inventory = require("./routes/inventory");
 
 class Server {
   constructor(routes) {
@@ -41,7 +42,10 @@ class Server {
     );
   }
 }
-routes = [{ path: "/api/clinic/", controller: clinic }];
+routes = [
+  { path: "/api/clinic/", controller: clinic },
+  { path: "/api/inventory/", controller: inventory },
+];
 const server = new Server(routes);
 // module.exports = server;
 server.listen();
