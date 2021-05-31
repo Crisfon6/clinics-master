@@ -2,11 +2,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 
 class Server {
-  constructor() {
+  constructor(routes) {
     this.app = express();
     this.port = process.env.PORT || 3001;
     this.connectDB();
-    this.routes();
+    this.routes(routes);
     this.middlewares();
   }
 
@@ -26,9 +26,12 @@ class Server {
     this.app.use(express.json());
   }
 
-  routes() {
-    this.app.use("/api/user");
-    // 
+  routes(routes) {
+    routes.forEach(route => {
+      this.app.use(route.path, route.controller);
+    });
+    // this.app.use("/api/user");
+    // importar rutas
   }
 
   listen() {
@@ -37,6 +40,7 @@ class Server {
     );
   }
 }
-const server = new Server();
+routes = [ {path: "api/user" , controller : <"route que trabajaron">} ];
+const server = new Server(routes);
 // module.exports = server;
 server.listen();
