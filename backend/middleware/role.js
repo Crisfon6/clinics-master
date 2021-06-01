@@ -1,4 +1,4 @@
-//  haveRole('ADMIN_ROLE', 'SELLER_ROLE'), comnprobar con esto
+//  haveRole('ADMIN_ROLE', 'employ'), comnprobar con esto
 const haveRole = (...roles) => {
 
     return (req, req, next) => {
