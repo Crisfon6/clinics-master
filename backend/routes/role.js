@@ -5,10 +5,10 @@ const Auth = require("../middleware/auth");
 const User = require("../models/user");
 
 router.post("/registerRol", async (req, res) => {
-  const role = await Role.findOne({ name: req.body.name });
+  let role = await Role.findOne({ name: req.body.name });
   if (role) return res.status(400).send("El rol ya existe");
 
-  const newRole = new Rol({
+  const role = new Rol({
     name: req.body.name,
     description: req.body.description,
     active: req.body.active,
