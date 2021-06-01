@@ -10,7 +10,12 @@ const auth = require("./routes/login");
 const history = require("./routes/history");
 const equipment = require("./routes/equipment");
 const dotenv = require("dotenv");
+const validateEnv = require("./utils/validateenv");
+
+
+//esto agregarlo al main
 dotenv.config();
+validateEnv();
 
 class Server {
     constructor(routes) {
