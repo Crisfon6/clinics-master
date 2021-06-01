@@ -38,8 +38,10 @@ router.put("/editHistory", Auth, async (req, res) => {
   return res.status(200).send({ history });
 });
 
-router.delete("/:_id", Auth, async (req, res) => {
-  const history = await History.findByIdAndDelete(req.params._id);
+router.put("/:_id", Auth, async (req, res) => {
+  const history = await History.findByIdAndUpdate(req.params._id, {
+    
+  });
   if (!history) return res.status(400).send("History could not be deleted.");
   return res.status(200).send("History deleted.");
 });

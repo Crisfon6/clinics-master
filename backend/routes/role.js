@@ -2,6 +2,7 @@ const express = require("express");
 const Role = require("../models/role");
 const router = express.Router();
 const Auth = require("../middleware/auth");
+const haveRole = require("../middleware/role");
 const User = require("../models/user");
 
 router.post("/registerRol", async (req, res) => {
@@ -38,12 +39,7 @@ router.put("/updateRole", Auth, async (req, res) => {
   return res.status(200).send({ rol });
 });
 
-router.delete("/:_id", Auth, async (req, res) => {
-  const user = await User.findbyId(req.user._id);
-  if (!user)
-    return res
-      .status(400)
-      .send("Usuario no autenticado, por favor inicie sesion.");
+router.put("/:_id", Auth, haveRole("ADMIN_ROLE"), async (req, res) => {
 
   const rol = await Rol.findByIdAndUpdate(req.params._id, {
     name: rol.name,
@@ -52,7 +48,7 @@ router.delete("/:_id", Auth, async (req, res) => {
   });
 
   if (!rol) return res.status(400).send("No se pudo eliminar el rol.");
-  return res.status(200).send("Rol eliminado");
+  return res.status(200).send("Rol eliminado.");
 });
 
 module.exports = router;
