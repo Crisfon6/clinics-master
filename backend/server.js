@@ -9,6 +9,13 @@ const role = require("./routes/role");
 const auth = require("./routes/login");
 const history = require("./routes/history");
 const equipment = require("./routes/equipment");
+const dotenv = require("dotenv");
+const validateEnv = require("./utils/validateenv");
+
+
+//esto agregarlo al main
+dotenv.config();
+validateEnv();
 
 class Server {
     constructor(routes) {
@@ -20,8 +27,9 @@ class Server {
     }
 
     connectDB() {
+        const mongodbURI = process.env.MONGODBURI;
         mongoose
-            .connect("mongodb://localhost:27017/equiposMedicos", {
+            .connect(mongodbURI, {
                 useNewUrlParser: true,
                 useUnifiedTopology: true,
                 useFindAndModify: false,
@@ -51,10 +59,10 @@ routes = [
     { path: "/api/clinic/", controller: clinic },
     { path: "/api/inventory/", controller: inventory },
     { path: "/api/users/", controller: user },
-    { path: "/api/role/", controller: role},
+    { path: "/api/role/", controller: role },
     { path: "/api/employee/", controller: employee },
-    { path: "/api/auth/", controller: auth},
-    { path: "/api/equipment/", controller: equipment},
+    { path: "/api/auth/", controller: auth },
+    { path: "/api/equipment/", controller: equipment },
     { path: "/api/history/", controller: history },
 ];
 
