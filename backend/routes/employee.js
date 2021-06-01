@@ -4,14 +4,16 @@ const Employee = require("../models/employee");
 const mongoose = require("mongoose");
 const User = require("../models/user");
 const Auth = require("../middleware/auth");
+const userDB = require("../middleware/userDB");
 //const Role = require("../models/role");
 
-router.post("/registerEmployee", Auth, async(req,res)=>{
-    const user = await User.findById(req.body.userId);
-    if(!user) return res.status(401).send("This User doesn't exist");
 
-    //const role = await Role.findById(user.role)
-    //if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
+
+router.post("/registerEmployee", Auth,userDB, async(req,res)=>{
+
+    if(!req.body.userId ||
+        ! req.body.CV ) return res.status(400).send("Empty Fields")
+
 
     let employee = new Employee({
         userId:req.body.userId,
@@ -23,7 +25,7 @@ router.post("/registerEmployee", Auth, async(req,res)=>{
    return result?res.status(200).send("Employee Registred Succesfully"):res.status(401).send("Error Registering Employee")
 })
 
-router.put("/updatingEmployee", Auth, async(req,res)=>{
+router.put("/updatingEmployee", Auth,userDB, async(req,res)=>{
 
     const user = await User.findById(req.user._id);
     if(!user) return res.status(401).send("This user doesn't exist");
@@ -38,20 +40,12 @@ router.put("/updatingEmployee", Auth, async(req,res)=>{
 
 })
 
-router.get("/getEmployees", Auth, async(req,res)=>{
-
-    const user = await User.findById(req.user._id);
-    if(!user) return res.status(401).send("This User doesn't exist");
-
-    //const role = await Role.findById(user.role)
-    //if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
+router.get("/getEmployees", Auth,userDB, async(req,res)=>{
 
 
     const employees = await Employee.aggregate().lookup({ 
         from: 'users', localField: 'userId', foreignField: '_id', as: 'user' }
-        ).exec((err, images) => {
-            console.log(err,images);
-})
+        )
 
     if(!employees) return res.status(401).send("Error Searching Employees")
     return res.status(200).send({employees})
