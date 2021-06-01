@@ -4,9 +4,19 @@ const router = express.Router();
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const Auth = require("../middleware/auth");
-
+const userDB = require("../middleware/userDB");
 /*Function to register new user, cheking  whether the user already exists*/
-router.post("/registerUser", Auth, async(req,res)=>{
+router.post("/registerUser", Auth, userDB,async(req,res)=>{
+
+
+    if(!req.body.name ||
+        ! req.body.userName ||
+        ! req.body.email ||
+        ! req.body.password ||
+        ! req.body.phone ||
+        ! req.body.role) return res.status(400).send("Empty Fields")
+
+
     //validating unique eMAIL
     let user = await User.findOne({email:req.body.email});
     if (user) return res.status(400).send("This user already exists");
@@ -39,15 +49,22 @@ router.post("/registerUser", Auth, async(req,res)=>{
 });
 
 
-router.put("/updateUser", Auth, async(req,res)=>{
+router.put("/updateUser", Auth, userDB, async(req,res)=>{
 
-    const user = await User.findById(req.user.id);
-    if(!user) return res.status(401).send("This User doesn't exist");
+    if(!req.body._id ||
+        !req.body.name ||
+        ! req.body.userName ||
+        ! req.body.email ||
+        ! req.body.password ||
+        ! req.body.phone ||
+        ! req.body.role ||
+        ! req.body.active) return res.status(400).send("Empty Fields")
 
     const userChanged = await User.findByIdAndUpdate(req.body._id,{
         name:req.body.name,
         userName:req.body.userName,
         email:req.body.email,
+        password:req.body.password,
         phone:req.body.phone,
         role:req.body.role,
         active:req.body.active
