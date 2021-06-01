@@ -1,8 +1,10 @@
-import server from "./server";
+
+const server = require('./server.js');
+const routers = require("./routes/index")
 
 function main() {
-    const server = new server();
-    server.listen();
+   
+    server.run(routers);
 }
 
 main();
