@@ -1,8 +1,13 @@
-import server from "./server";
+const server = require('./server.js');
+const routers = require("./routes/index");
+const dotenv = require("dotenv");
+const validateEnv = require('./utils/validateenv');
+dotenv.config();
+validateEnv();
 
 function main() {
-    const server = new server();
-    server.listen();
+
+    server.run(routers);
 }
 
 main();

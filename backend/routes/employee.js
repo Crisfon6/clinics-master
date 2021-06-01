@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Employee = require("../models/employee");
+const mongoose = require("mongoose");
 const User = require("../models/user");
 const Auth = require("../middleware/auth");
 //const Role = require("../models/role");
@@ -45,20 +46,12 @@ router.get("/getEmployees", Auth, async(req,res)=>{
     //const role = await Role.findById(user.role)
     //if(role.name === 'admin') return res.status(401).send("You must be a admin to register a employee")
 
-    const employees = await User.aggregate(
-        [{
-            $match:{}
-        },
-        {
-            $lookup:{
-                from:"user",
-                localField:"userId",
-                foreignField:"_id",
-                as:"userId"
-            },
-        }    
-    ]
-    )
+
+    const employees = await Employee.aggregate().lookup({ 
+        from: 'users', localField: 'userId', foreignField: '_id', as: 'user' }
+        ).exec((err, images) => {
+            console.log(err,images);
+})
 
     if(!employees) return res.status(401).send("Error Searching Employees")
     return res.status(200).send({employees})
