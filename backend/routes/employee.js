@@ -63,7 +63,7 @@ router.put(
   }
 );
 
-router.get("/getEmployees", Auth, userDB, dataCompleted, Role.haveRole('admin'),async (req, res) => {
+router.get("/getEmployees", Auth, userDB, dataCompleted, Role.haveRole('admin','employee'),async (req, res) => {
   const employees = await Employee.find().populate({ 
     path: 'userId',
     populate: {
