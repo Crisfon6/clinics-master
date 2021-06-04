@@ -25,7 +25,7 @@ router.get(
   "/getRole/:name?",
   Auth,
   userDB,
-  // haveRole("admin"),
+  haveRole("admin"),
   async (req, res) => {
     const role = await Role.find({
       name: new RegExp(req.params["name"], "i"),
@@ -41,7 +41,7 @@ router.put(
   "/editRole",
   Auth,
   userDB,
-  // haveRole("admin"),
+  haveRole("admin"),
   validateData,
   async (req, res) => {
     const validId = mongoose.Types.ObjectId.isValid(req.body._id);
@@ -63,7 +63,7 @@ router.put(
   "/deleteRole",
   Auth,
   userDB,
-  // haveRole("admin"),
+  haveRole("admin"),
   validateData,
   async (req, res) => {
     const validId = mongoose.Types.ObjectId.isValid(req.body._id);
