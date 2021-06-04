@@ -6,17 +6,32 @@ const User = require("../models/user");
 const Auth = require("../middleware/auth");
 const userDB = require("../middleware/userDB");
 const dataCompleted = require("../middleware/validateData");
-//const Role = require("../models/role");
+const Upload = require("../middleware/file");
+const Role = require("../middleware/role");
 
 router.post(
   "/registerEmployee",
   Auth,
   userDB,
-  dataCompleted,
+  Upload.single("CV"),
   async (req, res) => {
+
+
+    if(!req.body.userId || !!req.body.CV)  return res.status(401).send("Incomplete data")
+
+    if(req.params["error-pdf"]) return res.status(401).send("The file must be a PDF")
+
+    const userId = await Employee.find({userId:req.body.userId})
+    if(userId) return res.status(400).send("Employee already exists")
+  
+    const url = req.protocol + "://" + req.get("host")
+    let imgUrl = "";
+    if(req.file !== undefined && req.file.filename) imgUrl = url + "/uploads/"+req.file.filename
+
+
     let employee = new Employee({
       userId: req.body.userId,
-      CV: req.body.CV,
+      CV: imgUrl,
     });
 
     const result = await employee.save();
@@ -48,13 +63,14 @@ router.put(
   }
 );
 
-router.get("/getEmployees", Auth, userDB, dataCompleted, async (req, res) => {
-  const employees = await Employee.aggregate().lookup({
-    from: "users",
-    localField: "userId",
-    foreignField: "_id",
-    as: "user",
-  });
+router.get("/getEmployees", Auth, userDB, dataCompleted, Role.haveRole('admin'),async (req, res) => {
+  const employees = await Employee.find().populate({ 
+    path: 'userId',
+    populate: {
+      path: 'role',
+      model: 'Rol'
+    } 
+ }).exec()
 
   if (!employees) return res.status(401).send("Error Searching Employees");
   return res.status(200).send({ employees });

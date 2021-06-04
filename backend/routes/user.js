@@ -6,9 +6,16 @@ const bcrypt = require("bcrypt");
 const Auth = require("../middleware/auth");
 const userDB = require("../middleware/userDB");
 const dataCompleted = require("../middleware/validateData");
+const Upload = require("../middleware/file")
+const Role = require("../middleware/role")
+
 
 /*Function to register new user, cheking  whether the user already exists*/
-router.post("/registerUser", dataCompleted, async (req, res) => {
+router.post("/registerUser", dataCompleted,Upload.single("image"), async (req, res) => {
+
+  if(req.params["error-image"]) return res.status(401).send("The file must be a image")
+
+
   //validating unique eMAIL
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send("This user already exists");
@@ -16,8 +23,13 @@ router.post("/registerUser", dataCompleted, async (req, res) => {
   //encrypting password
   const hash = await bcrypt.hash(req.body.password, 10);
 
+  const url = req.protocol + "://" + req.get("host")
+    let hvUrl = "";
+    if(req.file !== undefined && req.file.filename) hvUrl = url + "/uploads/"+req.file.filename
+
   //creating user object
   user = new User({
+    avatar:hvUrl,
     name: req.body.name,
     userName: req.body.userName,
     email: req.body.email,

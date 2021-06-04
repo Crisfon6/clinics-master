@@ -1,16 +1,16 @@
+const Role = require("../models/role");
+
 //  haveRole('ADMIN_ROLE', 'employ'), comnprobar con esto
-const haveRole = (...req) => {
-    return (req, res, next) => {
-        if (!req.user) {
-            return res
-                .status(500)
-                .send({ msg: "Tu necesitas un token primero para validar tu rol" });
-        }
-        if (!roles.includes(req.user.role)) {
-            return res.status(401).send({
-                msg: "Este servicio requiere tener algunos de estos roles : ",
-                roles,
-            });
+
+
+const haveRole = (role) => {
+    return async(req, res, next) => {
+      
+        
+        const roleDB = await Role.findById(req.user.role);
+
+        if (role !== roleDB.name) {
+            return res.status(400).send("You need be "+role)
         }
         next();
     };

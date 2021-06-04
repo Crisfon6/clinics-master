@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 
 const employeeSchema = new mongoose.Schema({
-    userId:String,
+    userId:{type:mongoose.Schema.ObjectId,ref:"user"},
     CV:String,
 })
 
