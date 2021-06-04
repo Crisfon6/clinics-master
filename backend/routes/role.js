@@ -2,53 +2,82 @@ const express = require("express");
 const Role = require("../models/role");
 const router = express.Router();
 const Auth = require("../middleware/auth");
-const haveRole = require("../middleware/role");
-const User = require("../models/user");
+const userDB = require("../middleware/userDB");
+const validateData = require("../middleware/validateData");
+const { haveRole } = require("../middleware/role");
+const mongoose = require("mongoose");
 
-router.post("/registerRol", async (req, res) => {
+// Register new users, a new user has an actitve status by default
+router.post("/newRole", validateData, async (req, res) => {
   let role = await Role.findOne({ name: req.body.name });
-  if (role) return res.status(400).send("El rol ya existe");
+  if (role) return res.status(401).send("Error: The role already exists.");
 
-  const role = new Rol({
+  role = new Role({
     name: req.body.name,
     description: req.body.description,
-    active: req.body.active,
   });
 
   const result = await role.save();
   return res.status(200).send({ result });
 });
 
-router.get("/getRoles", Auth, async (req, res) => {
-  const role = await Role.find();
-  if (!role)
-    return res
-      .status(400)
-      .send("No se encontraron roles registrados en la BD.");
-  return res.status(200).send({ role });
-});
+router.get(
+  "/getRole/:name?",
+  Auth,
+  userDB,
+  // haveRole("admin"),
+  async (req, res) => {
+    const role = await Role.find({
+      name: new RegExp(req.params["name"], "i"),
+    })
+      .populate()
+      .exec();
+    if (!role) return res.status(200).send("No roles were found.");
+    return res.status(200).send({ role });
+  }
+);
 
-router.put("/updateRole", Auth, async (req, res) => {
-  const rol = await Rol.findByIdAndUpdate(req.body._id, {
-    name: req.body.name,
-    description: req.body.description,
-    active: req.body.active,
-  });
+router.put(
+  "/editRole",
+  Auth,
+  userDB,
+  // haveRole("admin"),
+  validateData,
+  async (req, res) => {
+    const validId = mongoose.Types.ObjectId.isValid(req.body._id);
+    if(!validId) return res.status(401).send("Error: Invalid id");
 
-  if (!rol) return res.status(400).send("El rol no se pudo actualizar");
-  return res.status(200).send({ rol });
-});
+    let role = await Role.findByIdAndUpdate(req.body._id, {
+      name: req.body.name,
+      description: req.body.description,
+      active: req.body.active,
+    },
+    {new : true });
 
-router.put("/:_id", Auth, haveRole("ADMIN_ROLE"), async (req, res) => {
+    if (!role) return res.status(400).send("Error: Could not update role.");
+    return res.status(200).send({message: "Role updated successfully", role });
+  }
+);
 
-  const rol = await Rol.findByIdAndUpdate(req.params._id, {
-    name: rol.name,
-    description: rol.description,
-    active: false,
-  });
+router.put(
+  "/deleteRole",
+  Auth,
+  userDB,
+  // haveRole("admin"),
+  validateData,
+  async (req, res) => {
+    const validId = mongoose.Types.ObjectId.isValid(req.body._id);
+    if(!validId) return res.status(401).send("Error: Invalid id");
 
-  if (!rol) return res.status(400).send("No se pudo eliminar el rol.");
-  return res.status(200).send("Rol eliminado.");
-});
+    let role = await Role.findByIdAndUpdate(req.body._id, {
+      name: req.body.name,
+      description: req.body.description,
+      active: false,
+    });
+
+    if (!role) return res.status(400).send("Error: Could not update the role.");
+    return res.status(200).send("Role " + req.body.name + " was deleted.");
+  }
+);
 
 module.exports = router;
