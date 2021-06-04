@@ -47,7 +47,7 @@ router.put(
     const validId = mongoose.Types.ObjectId.isValid(req.body._id);
     if(!validId) return res.status(401).send("Error: Invalid id");
 
-    let role = await Role.findByIdAndUpdate(req.body._id, {
+    role = await Role.findByIdAndUpdate(req.body._id, {
       name: req.body.name,
       description: req.body.description,
       active: req.body.active,

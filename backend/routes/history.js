@@ -48,7 +48,10 @@ router.get(
     if (!validId) return res.status(400).send("Error: Invalid id.");
 
     let history = await History.findById(req.params.id)
-      .populate({ path: "executeBy equipment", select: "name" })
+      .populate([
+        { path: "equipment", select: "name" },
+        { path: "executeBy", select: "name -_id" },
+      ])
       .exec();
 
     if (!history) return res.status(401).send("No history were found.");
@@ -60,7 +63,7 @@ router.put(
   "/editHistory",
   Auth,
   userDB,
-  haveRole("admin", "user"),
+  haveRole("admin"),
   validateData,
   async (req, res) => {
     const validId = mongoose.Types.ObjectId.isValid(req.body._id);
@@ -82,7 +85,7 @@ router.put(
   "/deleteHistory",
   Auth,
   userDB,
-  haveRole("admin", "user"),
+  haveRole("admin"),
   validateData,
   async (req, res) => {
     const validId = mongoose.Types.ObjectId.isValid(req.body._id);
