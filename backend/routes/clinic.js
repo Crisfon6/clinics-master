@@ -24,7 +24,7 @@ router.post("/saveClinic", Auth, userDB, dataCompleted, async (req, res) => {
 });
 //list clinics
 router.get("/listClinic", Auth, userDB, dataCompleted, async (res, req) => {
-  const user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id).populate("roleId").exec();
   if (!user) return res.status(400).send("Usuario no autenticado");
   const clinic = await Clinic.find({ userId: req.user._id });
   return res.status(200).send({ clinic });

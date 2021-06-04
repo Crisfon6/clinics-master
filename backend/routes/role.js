@@ -5,7 +5,7 @@ const Auth = require("../middleware/auth");
 const userDB = require("../middleware/userDB");
 const dataCompleted = require("../middleware/validateData");
 
-router.post("/RegistrarRol", dataCompleted, async (req, res) => {
+router.post("/registerRole", dataCompleted, async (req, res) => {
   const rol = await Rol.findOne({ name: req.body.name });
   if (rol) return res.status(400).send("El rol ya existe");
   const role = await req.body;

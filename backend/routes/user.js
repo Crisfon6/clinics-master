@@ -55,4 +55,7 @@ router.put("/updateUser", Auth, userDB, dataCompleted, async (req, res) => {
   return res.status(200).send({ userChanged });
 });
 
+router.get("/listUsers", Auth, userDB)
+
+
 module.exports = router;
