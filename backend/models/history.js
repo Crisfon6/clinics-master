@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
-const historySchema = new mongoose.Schema({
-    description: String,
-    date: {type: Date,
-        default: Date.now},
-        inventary: String,
-        executeBy: String,
-}) 
 
-const History = mongoose.model("Historial", historySchema)
-module.exports = History
+// Historial representa los mantenimientos realizados a un equipo.
+const historySchema = new mongoose.Schema({
+  description: String,
+  executeBy: { type: mongoose.Schema.ObjectId, ref: "user" },
+  equipment: { type: mongoose.Schema.ObjectId, ref: "equipment" },
+  status: { type: String, default: true },
+  date: { type: Date, default: Date.now },
+});
+
+const History = mongoose.model("History", historySchema);
+module.exports = History;
