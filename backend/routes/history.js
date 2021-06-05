@@ -13,7 +13,7 @@ router.post(
     "/newHistory",
     Auth,
     userDB,
-    haveRole(["admin", "user"]),
+    haveRole.haveRole(["admin", "user"]),
     validateData,
     async(req, res) => {
         let validId = mongoose.Types.ObjectId.isValid(req.body.equipment);
@@ -41,7 +41,7 @@ router.get(
     "/getHistory/:id",
     Auth,
     userDB,
-    haveRole("admin", "user"),
+    haveRole.haveRole(["admin", "user"]),
     validateData,
     async(req, res) => {
         const validId = mongoose.Types.ObjectId.isValid(req.params.id);
@@ -63,7 +63,7 @@ router.put(
     "/editHistory",
     Auth,
     userDB,
-    haveRole("admin"),
+    haveRole.haveRole(["admin"]),
     validateData,
     async(req, res) => {
         const validId = mongoose.Types.ObjectId.isValid(req.body._id);
@@ -85,7 +85,7 @@ router.put(
     "/deleteHistory",
     Auth,
     userDB,
-    haveRole("admin"),
+    haveRole.haveRole(["admin"]),
     validateData,
     async(req, res) => {
         const validId = mongoose.Types.ObjectId.isValid(req.body._id);

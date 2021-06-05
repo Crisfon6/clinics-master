@@ -1,19 +1,15 @@
 const Role = require("../models/role");
+
 const haveRole = (...role) => {
-    return async (req, res, next) => {
+    return async(req, res, next) => {
         let error = true;
         try {
-            const roleDB = await Role.findById(req.user.role);
-            role.forEach(element => {
-                if (element === roleDB.name) {
-                    error = false;
-                }
-            });
-            if (error === true)
-                return res.status(400).send("You need be " + role);
+            const roleUser = await Role.findById(req.user.role);
+
+            if (!role.includes(roleUser.name)) return res.status(400).send("You need be " + role);
+
             next();
-        }
-        catch (eror) {
+        } catch (err) {
             res.status(400).send("Error checking role");
         }
     };
