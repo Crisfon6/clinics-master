@@ -4,8 +4,9 @@ const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const userDB = require("../middleware/userDB");
 const dataCompleted = require("../middleware/validateData");
+const contract = require("../contracts/login");
 
-router.post("/login", dataCompleted, async (req, res) => {
+router.post("/login", dataCompleted(contract.login), async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) return res.status(400).send("Email o contraseña incorrectos.");

@@ -26,9 +26,7 @@ router.post("/saveInventory", Auth, userDB, dataCompleted, async (req, res) => {
 });
 
 router.get("listInventory", Auth, userDB, dataCompleted, async (req, res) => {
-  const user = await User.findById(req.user._id)
-    .populate("clinicID", "equipmentID")
-    .exec();
+  const user = await User.findById(req.user._id);
 
   if (!user) return res.status(401).send("El user no exite en db");
 
