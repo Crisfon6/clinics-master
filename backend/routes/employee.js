@@ -11,7 +11,7 @@ const Role = require("../middleware/role");
 const contract = require("../contracts/employee");
 
 router.post(
-  "/registerEmployee",
+  "/create",
   Auth,
   userDB,
   dataCompleted(contract.create),
@@ -45,7 +45,7 @@ router.post(
 );
 
 router.put(
-  "/updatingEmployee",
+  "/update",
   Auth,
   userDB,
   dataCompleted(contract.update),
@@ -66,7 +66,7 @@ router.put(
 );
 
 router.get(
-  "/getEmployees",
+  "/list",
   Auth,
   userDB,
   dataCompleted,

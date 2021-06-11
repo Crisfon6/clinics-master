@@ -11,7 +11,7 @@ const Upload = require("../middleware/file");
 
 /*Function to register new user, cheking  whether the user already exists*/
 router.post(
-  "/registerUser",
+  "/create",
   dataCompleted(contract.create),
   Upload.single("image"),
   async (req, res) => {
@@ -56,7 +56,7 @@ router.post(
 );
 
 router.put(
-  "/updateUser",
+  "/update",
   Auth,
   userDB,
   dataCompleted(contract.update),

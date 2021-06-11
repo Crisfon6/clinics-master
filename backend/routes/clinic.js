@@ -9,7 +9,7 @@ const contract = require("../contracts/clinic");
 
 //create clinic
 router.post(
-  "/saveClinic",
+  "/create",
   Auth,
   userDB,
   dataCompleted(contract.create),
@@ -30,7 +30,7 @@ router.post(
   }
 );
 //list clinics
-router.get("/listClinic", Auth, userDB, async (res, req) => {
+router.get("/list", Auth, userDB, async (res, req) => {
   const user = await User.findById(req.user._id);
   if (!user) return res.status(400).send("Usuario no autenticado");
   const clinic = await Clinic.find({ userId: req.user._id });
@@ -38,7 +38,7 @@ router.get("/listClinic", Auth, userDB, async (res, req) => {
 });
 
 router.put(
-  "/updateClinic",
+  "/update",
   Auth,
   userDB,
   dataCompleted(contract.update),

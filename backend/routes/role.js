@@ -8,7 +8,7 @@ const { haveRole } = require("../middleware/role");
 const mongoose = require("mongoose");
 
 // Register new users, a new user has an actitve status by default
-router.post("/newRole", validateData, async (req, res) => {
+router.post("/create", validateData, async (req, res) => {
   let role = await Role.findOne({ name: req.body.name });
   if (role) return res.status(401).send("Error: The role already exists.");
 
@@ -38,7 +38,7 @@ router.get(
 );
 
 router.put(
-  "/editRole",
+  "/update",
   Auth,
   userDB,
   haveRole("admin"),
@@ -60,7 +60,7 @@ router.put(
 );
 
 router.put(
-  "/deleteRole",
+  "/delete",
   Auth,
   userDB,
   haveRole("admin"),

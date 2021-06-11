@@ -10,7 +10,7 @@ const haveRole = require("../middleware/role");
 const mongoose = require("mongoose");
 const contract = require("../contracts/history");
 router.post(
-  "/newHistory",
+  "/create",
   Auth,
   userDB,
   haveRole.haveRole(["admin", "user"]),
@@ -60,7 +60,7 @@ router.get(
 );
 
 router.put(
-  "/updateHistory",
+  "/update",
   Auth,
   userDB,
   haveRole.haveRole(["admin"]),
@@ -82,7 +82,7 @@ router.put(
 );
 
 router.put(
-  "/deleteHistory",
+  "/delete",
   Auth,
   userDB,
   haveRole.haveRole(["admin"]),
