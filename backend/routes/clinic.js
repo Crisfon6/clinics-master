@@ -8,14 +8,14 @@ const dataCompleted = require("../middleware/validateData");
 const contract = require("../contracts/clinic");
 
 //create clinic
+//  Auth,
+// userDB,
 router.post(
   "/saveClinic",
-  Auth,
-  userDB,
   dataCompleted(contract.create),
   async (req, res) => {
-    const user = await User.findById(req.user._id);
-    if (!user) return res.status(400).send("Usuario no autenticado");
+    //const user = await User.findById(req.user._id);
+    //if (!user) return res.status(400).send("Usuario no autenticado");
     if (!req.body.name || !req.body.description)
       return res.status(401).send("Incomplete data");
 
@@ -23,7 +23,7 @@ router.post(
       name: req.body.name,
       description: req.body.description,
       location: req.body.location,
-      userId: user._id,
+      userId: req.body.userId,
     });
     const result = await clinic.save();
     return res.status(200).send({ result });

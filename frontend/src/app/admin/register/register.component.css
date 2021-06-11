@@ -1,0 +1,11 @@
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+
+mat-tab-group{
+    max-width:500px;
+    min-width:300px;
+}

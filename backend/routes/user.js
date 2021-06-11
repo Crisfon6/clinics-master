@@ -10,10 +10,10 @@ const contract = require("../contracts/user");
 const Upload = require("../middleware/file");
 
 /*Function to register new user, cheking  whether the user already exists*/
+  //Upload.single("image"),
 router.post(
   "/registerUser",
   dataCompleted(contract.create),
-  Upload.single("image"),
   async (req, res) => {
     if (req.params["error-image"])
       return res.status(401).send("The file must be a image");
@@ -43,12 +43,10 @@ router.post(
 
     //saving user
     const result = await user.save();
-
-    //Veriying result of save the user and generating jwt
-
+  
     if (result) {
-      const jwtToken = user.generateJWT();
-      res.status(200).send({ jwtToken });
+      const idRes = result._id 
+      res.status(200).send({idRes});
     } else {
       return res.status(200).send("Registration failed");
     }

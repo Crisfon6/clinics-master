@@ -9,22 +9,20 @@ const dataCompleted = require("../middleware/validateData");
 const Upload = require("../middleware/file");
 const Role = require("../middleware/role");
 const contract = require("../contracts/employee");
-
+/*Upload.single("CV")
+ Auth
+// userDB,*/
 router.post(
   "/registerEmployee",
-  Auth,
-  userDB,
   dataCompleted(contract.create),
   Upload.single("CV"),
   async (req, res) => {
-    if (!req.body.userId || !!req.body.CV)
-      return res.status(401).send("Incomplete data");
+
 
     if (req.params["error-pdf"])
       return res.status(401).send("The file must be a PDF");
 
-    const userId = await Employee.find({ userId: req.body.userId });
-    if (userId) return res.status(400).send("Employee already exists");
+  
 
     const url = req.protocol + "://" + req.get("host");
     let imgUrl = "";
@@ -38,9 +36,12 @@ router.post(
 
     const result = await employee.save();
 
-    return result
-      ? res.status(200).send("Employee Registred Succesfully")
-      : res.status(401).send("Error Registering Employee");
+    if(result) return res.status(200).send({success:"Employee Registred Succesfully"})
+    else return res.status(401).send({error:"Employee Registred Succesfully"});
+
+    
+
+   
   }
 );
 
