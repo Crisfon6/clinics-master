@@ -8,7 +8,7 @@ const Inventory = require("../models/inventory");
 const Equipment = require("../models/equipment");
 const User = require("../models/user");
 
-router.post("/saveInventory", Auth, userDB, dataCompleted, async (req, res) => {
+router.post("/create", Auth, userDB, dataCompleted, async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (!user) return res.status(400).send("Usuario no autenticado");
@@ -25,7 +25,7 @@ router.post("/saveInventory", Auth, userDB, dataCompleted, async (req, res) => {
   return res.status(200).send({ result });
 });
 
-router.get("listInventory", Auth, userDB, dataCompleted, async (req, res) => {
+router.get("list", Auth, userDB, dataCompleted, async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (!user) return res.status(401).send("El user no exite en db");
@@ -35,7 +35,7 @@ router.get("listInventory", Auth, userDB, dataCompleted, async (req, res) => {
 });
 
 router.put(
-  "/updateInventory",
+  "/update",
   Auth,
   userDB,
   dataCompleted,
