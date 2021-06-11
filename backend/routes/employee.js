@@ -8,26 +8,28 @@ const userDB = require("../middleware/userDB");
 const dataCompleted = require("../middleware/validateData");
 const Upload = require("../middleware/file");
 const Role = require("../middleware/role");
+const contract = require("../contracts/employee");
 
 router.post(
   "/registerEmployee",
   Auth,
   userDB,
+  dataCompleted(contract.create),
   Upload.single("CV"),
   async (req, res) => {
+    if (!req.body.userId || !!req.body.CV)
+      return res.status(401).send("Incomplete data");
 
+    if (req.params["error-pdf"])
+      return res.status(401).send("The file must be a PDF");
 
-    if(!req.body.userId || !!req.body.CV)  return res.status(401).send("Incomplete data")
+    const userId = await Employee.find({ userId: req.body.userId });
+    if (userId) return res.status(400).send("Employee already exists");
 
-    if(req.params["error-pdf"]) return res.status(401).send("The file must be a PDF")
-
-    const userId = await Employee.find({userId:req.body.userId})
-    if(userId) return res.status(400).send("Employee already exists")
-  
-    const url = req.protocol + "://" + req.get("host")
+    const url = req.protocol + "://" + req.get("host");
     let imgUrl = "";
-    if(req.file !== undefined && req.file.filename) imgUrl = url + "/uploads/"+req.file.filename
-
+    if (req.file !== undefined && req.file.filename)
+      imgUrl = url + "/uploads/" + req.file.filename;
 
     let employee = new Employee({
       userId: req.body.userId,
@@ -46,7 +48,7 @@ router.put(
   "/updatingEmployee",
   Auth,
   userDB,
-  dataCompleted,
+  dataCompleted(contract.update),
   async (req, res) => {
     const user = await User.findById(req.user._id);
     if (!user) return res.status(401).send("This user doesn't exist");
@@ -63,17 +65,26 @@ router.put(
   }
 );
 
-router.get("/getEmployees", Auth, userDB, dataCompleted, Role.haveRole('admin','employee'),async (req, res) => {
-  const employees = await Employee.find().populate({ 
-    path: 'userId',
-    populate: {
-      path: 'role',
-      model: 'Rol'
-    } 
- }).exec()
+router.get(
+  "/getEmployees",
+  Auth,
+  userDB,
+  dataCompleted,
+  Role.haveRole("admin", "employee"),
+  async (req, res) => {
+    const employees = await Employee.find()
+      .populate({
+        path: "userId",
+        populate: {
+          path: "role",
+          model: "Rol",
+        },
+      })
+      .exec();
 
-  if (!employees) return res.status(401).send("Error Searching Employees");
-  return res.status(200).send({ employees });
-});
+    if (!employees) return res.status(401).send("Error Searching Employees");
+    return res.status(200).send({ employees });
+  }
+);
 
 module.exports = router;

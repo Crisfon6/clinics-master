@@ -1,0 +1,623 @@
+{
+	"info": {
+		"_postman_id": "ae17c45c-d848-4a23-81e4-cd4ba262726c",
+		"name": "EquiposMedicos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1 - Roles",
+			"item": [
+				{
+					"name": "Create role: Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"admin\",\r\n    \"description\" : \"Administrador de la plataforma\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/role/newRole",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"role",
+								"newRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create role:  Employee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"employee\",\r\n    \"description\" : \"Encargado de mantenimiento\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/role/newRole",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"role",
+								"newRole"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Roles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiZmJiN2Y5NWMyZDUzZWM2ZGFiZmMiLCJuYW1lIjoidXNlcjEgdXNlcjEiLCJyb2xlIjoiNjBiYmZhN2RmOTVjMmQ1M2VjNmRhYmY5IiwiaWF0IjoxNjIyOTMyNDA3fQ._dJJhiMaRLXz_qcoLZF0tbVn-Y2Dc8wO1D93PzOrgVc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/role/getRole/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"role",
+								"getRole",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJhNDJmNDVmYjlkNjVjNDg2MTE1NTkiLCJuYW1lIjoidXNlcjEgdXNlciIsImlhdCI6MTYyMjgyMDQ0NX0.IGaHCcYg1XhoOYuypkSgKNWVHEQ3-XCQq2NiVGAR3Fk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\" : \"60ba40bb5fb9d65c48611550\",\r\n    \"name\" : \"Employee\",\r\n    \"description\" : \"Empleado encargado de realizar mantenimientos\",\r\n    \"active\" : true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/role/editRole/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"role",
+								"editRole",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJhNDJmNDVmYjlkNjVjNDg2MTE1NTkiLCJuYW1lIjoidXNlcjEgdXNlciIsImlhdCI6MTYyMjgyMDQ0NX0.IGaHCcYg1XhoOYuypkSgKNWVHEQ3-XCQq2NiVGAR3Fk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\" : \"60ba40bb5fb9d65c48611557\",\r\n    \"name\" : \"Employee\",\r\n    \"description\" : \"Empleado encargado de realizar mantenimientos\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/role/deleteRole/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"role",
+								"deleteRole",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2 - Users",
+			"item": [
+				{
+					"name": "Create user: admin 1",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"user1 user1\",\r\n    \"userName\" : \"user1232\",\r\n    \"email\" : \"user2@gmail.com\",\r\n    \"password\" : \"1234\",\r\n    \"phone\" : \"3123123123\",\r\n    \"role\" : \"60bbfa7df95c2d53ec6dabf9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/users/registerUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"users",
+								"registerUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create user: admin 2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"crisfon6\",\r\n    \"userName\" : \"crisfon6\",\r\n    \"email\" : \"crisfon6@gmail.com\",\r\n    \"password\" : \"1234\",\r\n    \"phone\" : \"3123123123\",\r\n    \"role\" : \"60bbfa7df95c2d53ec6dabf9\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/users/registerUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"users",
+								"registerUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3 - Login",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"crisfon6@gmail.com\",\r\n    \"password\" : \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4 - Clinic",
+			"item": [
+				{
+					"name": "http://localhost:3001/api/clinic/saveClinic",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiZmNlMWY5NWMyZDUzZWM2ZGFiZmUiLCJuYW1lIjoiY3Jpc2ZvbjYiLCJyb2xlIjoiNjBiYmZhN2RmOTVjMmQ1M2VjNmRhYmY5IiwiaWF0IjoxNjIyOTMyNzA5fQ.2WrX1hRh3EjgJZql0gTRez-thPDtTOtVIKGVOLKsnp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Clinica juan de dios\",\r\n    \"description\" : \"Esto es una clinica\",\r\n    \"location\" : \"Carrera 30A No. 30-30\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/clinic/saveClinic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"clinic",
+								"saveClinic"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5 - Equipment",
+			"item": [
+				{
+					"name": "http://localhost:3001/api/equipment/create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiZmNlMWY5NWMyZDUzZWM2ZGFiZmUiLCJuYW1lIjoiY3Jpc2ZvbjYiLCJyb2xlIjoiNjBiYmZhN2RmOTVjMmQ1M2VjNmRhYmY5IiwiaWF0IjoxNjIyOTMyNzA5fQ.2WrX1hRh3EjgJZql0gTRez-thPDtTOtVIKGVOLKsnp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\":\"prueba22222\",\r\n\"definition\":\"prueba\",\r\n\"brand\":\"prueba\",\r\n\"modelEquip\":\"prueba\",\r\n\"serie\":\"prueba\",\r\n\"weight\":200,\r\n\"provider\":\"prueba\",\r\n\"invimaReg\":\"prueba\",\r\n\"usefulLife\":\"prueba\",\r\n\"noInvima\":\"prueba\",\r\n\"length\":3231,\r\n\"width\":312,\r\n\"depth\":\"312\",\r\n\"photo\":\"/files\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/equipment/create",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"equipment",
+								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "6 - Inventory",
+			"item": [
+				{
+					"name": "http://localhost:3001/api/inventory/saveInventory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiZmNlMWY5NWMyZDUzZWM2ZGFiZmUiLCJuYW1lIjoiY3Jpc2ZvbjYiLCJyb2xlIjoiNjBiYmZhN2RmOTVjMmQ1M2VjNmRhYmY5IiwiaWF0IjoxNjIyOTMyNzA5fQ.2WrX1hRh3EjgJZql0gTRez-thPDtTOtVIKGVOLKsnp4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"equipmentID\" : [\"60bbfd13f95c2d53ec6dac00\"],\r\n    \"clinicID\" : \"60bbfd01f95c2d53ec6dabff\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/inventory/saveInventory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"inventory",
+								"saveInventory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "7 - History",
+			"item": [
+				{
+					"name": "Create History",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiZmNlMWY5NWMyZDUzZWM2ZGFiZmUiLCJuYW1lIjoiY3Jpc2ZvbjYiLCJyb2xlIjoiNjBiYmZhN2RmOTVjMmQ1M2VjNmRhYmY5IiwiaWF0IjoxNjIyOTMyODQyfQ.WTD4s2gtmwcw15PcZnaNZM3jc1PFtG4jLh0iJNARAmg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\" : \"Primera asistencia a Hostpital 1\",\r\n    \"equipment\" : \"60ba5999a78c6e694899b449\",\r\n    \"executeBy\" : \"60ba42f45fb9d65c48611559\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/history/newHistory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"history",
+								"newHistory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJhNDJmNDVmYjlkNjVjNDg2MTE1NTkiLCJuYW1lIjoidXNlcjEgdXNlciIsImlhdCI6MTYyMjgzNTcxN30.7Jihtln0vSlXMdLOhEwVEKIZ8W0pmKzbuL2kglmHl8k",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3001/api/history/getHistory/60ba778765a80a2d9c4d40e2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"history",
+								"getHistory",
+								"60ba778765a80a2d9c4d40e2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "8 - Uploads",
+			"item": [
+				{
+					"name": "uploads",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiZmNlMWY5NWMyZDUzZWM2ZGFiZmUiLCJuYW1lIjoiY3Jpc2ZvbjYiLCJyb2xlIjoiNjBiYmZhN2RmOTVjMmQ1M2VjNmRhYmY5IiwiaWF0IjoxNjIyOTM0ODU0fQ.Otz633YxkWkgloKomGnsoiCELCfEQEOteU9UB0RdsuA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "data",
+									"type": "file",
+									"src": "/C:/Users/disru/Pictures/Screenshot 2021-06-04 193308.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/uploads/CV",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"uploads",
+								"CV"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload image andres",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGJiZmNlMWY5NWMyZDUzZWM2ZGFiZmUiLCJuYW1lIjoiY3Jpc2ZvbjYiLCJyb2xlIjoiNjBiYmZhN2RmOTVjMmQ1M2VjNmRhYmY5IiwiaWF0IjoxNjIyOTMyODQyfQ.WTD4s2gtmwcw15PcZnaNZM3jc1PFtG4jLh0iJNARAmg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "dsadsa",
+									"type": "text"
+								},
+								{
+									"key": "userName",
+									"value": "sfsdfsdfsdfs",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "crisfon6@crisfon.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "60bbfa7df95c2d53ec6dabf9",
+									"type": "text"
+								},
+								{
+									"key": "phone",
+									"value": "1231231",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/disru/Pictures/Screenshot 2021-06-04 193308.png"
+								},
+								{
+									"key": "userId",
+									"value": "60bbfacff95c2d53ec6dabfb",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3001/api/users/registerUser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3001",
+							"path": [
+								"api",
+								"users",
+								"registerUser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

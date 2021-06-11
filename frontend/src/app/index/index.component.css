@@ -1,0 +1,22 @@
+.spacer-btns-nav {
+    flex: 1 1 auto;
+}
+
+.global-container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.example-container {
+    position: absolute;
+    width: 100%;
+    height: 85%;
+}
+
+.logout {
+    background-color: #df1e6e;
+    color: white;
+}

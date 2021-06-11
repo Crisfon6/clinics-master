@@ -6,6 +6,7 @@ const clinicSchema = new mongoose.Schema({
   description: String,
   location: String,
   userId: String,
+  active: { type: Boolean, default: true },
 });
 
 const Clinic = mongoose.model("clinic", clinicSchema);
