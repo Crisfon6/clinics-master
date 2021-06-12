@@ -1,1 +1,54 @@
-<p>inventory works!</p>
+<div class="title">
+  <h2>Registrar Inventario</h2>
+</div>
+
+<div class="form">
+  <form>
+    <div class="form-outline mb-3">
+      <label class="form-label"> Clínica </label>
+      <select class="form-select" aria-label="codigos equipos">
+        <option *ngFor="let clinic of clinics" [value]="clinic.value">
+          {{ clinic.viewValue }}
+        </option>
+      </select>
+    </div>
+
+    <div class="demo-button-container">
+      <button mat-raised-button>
+        Agregar Equipo
+      </button>
+      <button
+        mat-raised-button
+      >
+        Eliminar Equipo
+      </button>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Codigo del equipo</th>
+          <th scope="col">Nombre</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>#001</td>
+          <td>Equipo 1</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>#022</td>
+          <td>Equipo 2</td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <button type="submitEquipo" class="btn btn-primary btn-block mb-4">
+      Registrar
+    </button>
+  </form>
+</div>
