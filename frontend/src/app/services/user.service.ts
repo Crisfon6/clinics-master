@@ -14,6 +14,6 @@ export class UserService {
    }
 
    registerUser(userBody:any){
-    return this.http.post(this.baseUrl+"users/registerUser",userBody)
-   }
+    return this.http.post(this.baseUrl+"users/create",userBody)
+}
 }

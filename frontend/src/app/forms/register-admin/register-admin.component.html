@@ -1,20 +1,34 @@
 <div class="form">
-    <mat-card>
+    <mat-card class="form-card">
         <mat-card-title>
             Registrar Administrador
         </mat-card-title>
+        
+        <div id="msg" >  
+        <div *ngIf="message"  class="containerBox" >
+                      
+                <div  >
+                {{message}}
+            </div>
+            <div class="cls-btn"
+                 (click)="closeBox(0)"
+
+                >
+                x
+            </div>
+        </div>
+        </div>
         <mat-card-content>
             <div class="container">
-
-                <div>
-                    <input #imgInput
+                <div class="uploadImg">
+                    <div>
+                    <img id="imgPhoto" class="imgProfile" [src] ="srcImg">
+                </div>
+                    <input 
                         type="file"
                         accept="image/*"
-                        (change)="processImg(imgInput)"
-                        >
-
-                    <img id="imgPhoto" >
-
+                        (change)="processImg($event)"
+                        name ="avatar">
                 </div>
                 <mat-form-field>
                     <input

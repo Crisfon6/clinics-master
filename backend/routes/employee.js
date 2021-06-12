@@ -14,8 +14,6 @@ const contract = require("../contracts/employee");
 // userDB,*/
 router.post(
     "/create",
-    Auth,
-    userDB,
     dataCompleted(contract.create),
     Upload.single("CV"),
     async(req, res) => {
@@ -28,13 +26,13 @@ router.post(
   
 
         const url = req.protocol + "://" + req.get("host");
-        let imgUrl = "";
+        let cvUrl = "";
         if (req.file !== undefined && req.file.filename)
-            imgUrl = url + "/uploads/" + req.file.filename;
+            cvUrl = url + "/uploads/" + req.file.filename;
 
         let employee = new Employee({
             userId: req.body.userId,
-            CV: imgUrl,
+            CV: cvUrl,
         });
 
         const result = await employee.save();

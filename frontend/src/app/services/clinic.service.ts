@@ -12,6 +12,6 @@ export class ClinicService {
 
   }
   registerClinic(clinicBody:any){
-   return this.http.post(this.baseUrl+"clinic/saveClinic",clinicBody)
+   return this.http.post(this.baseUrl+"clinic/create",clinicBody)
   }
 }

@@ -13,9 +13,9 @@ const Upload = require("../middleware/file");
   //Upload.single("image"),
 router.post(
     "/create",
-    dataCompleted(contract.create),
-    Upload.single("image"),
+    Upload.single("avatar"),
     async(req, res) => {
+  
         if (req.params["error-image"])
             return res.status(401).send("The file must be a image");
 
@@ -31,6 +31,7 @@ router.post(
         if (req.file !== undefined && req.file.filename)
             hvUrl = url + "/uploads/" + req.file.filename;
 
+          
         //creating user object
         user = new User({
             avatar: hvUrl,

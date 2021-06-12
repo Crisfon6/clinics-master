@@ -19,11 +19,10 @@ const upload = multer({
     storage:storage,
     fileFilter:(req,file,fn)=>{
        
+  
         if(!file) {
-           
             return fn(null,false)}
-        else if(!file.mimetype.includes("image") && file.fieldname === "image"){
-      
+        else if(!file.mimetype.includes("image") && file.fieldname === "avatar"){
             req.params = {"error-img":"format-error"}
             fn(null,false)
         }

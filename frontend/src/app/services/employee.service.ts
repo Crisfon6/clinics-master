@@ -12,7 +12,7 @@ export class EmployeeService {
 
    }
    registerEmployee(employeeBody:any){
-    return this.http.post(this.baseUrl+"employee/registerEmployee",employeeBody)
+    return this.http.post(this.baseUrl+"employee/create",employeeBody)
    }
 
 }

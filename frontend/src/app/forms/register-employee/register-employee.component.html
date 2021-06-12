@@ -1,10 +1,36 @@
 <div class="form">
-    <mat-card>
+    <mat-card class="form-card"> 
         <mat-card-title>
             Registrar Empleado
         </mat-card-title>
+        <div id="msg" >  
+            <div *ngIf="message"  class="containerBox" >
+                          
+                    <div  >
+                    {{message}}
+                </div>
+                <div class="cls-btn"
+                     (click)="closeBox(0)"
+    
+                    >
+                    x
+                </div>
+            </div>
+            </div>
         <mat-card-content>
             <div class="container">
+
+                <div class="uploadImg">
+                    <div>
+                    <img id="imgPhoto" class="imgProfile" [src] ="srcImg">
+                </div>
+                    <input 
+                        type="file"
+                        accept="image/*"
+                        (change)="processImg($event)"
+                        name ="avatar">
+                </div>
+
                 <mat-form-field>
                     <input
                     [(ngModel)]="userData.name"
@@ -45,6 +71,13 @@
                     required
                     >
                 </mat-form-field>
+                <div>
+                    <input 
+                    type="file"
+                    accept="pdf/*"
+                    (change)="processCV($event)"
+                    name ="CV">
+                </div>
 
         
                 

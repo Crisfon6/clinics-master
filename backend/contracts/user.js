@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const create = Joi.object({
-  avatar: Joi.string(),
+  avatar: Joi.allow(),
   name: Joi.string().required(),
   userName: Joi.string().required(),
   password: Joi.string().required(),
@@ -11,7 +11,7 @@ const create = Joi.object({
 }).required();
 
 const update = Joi.object({
-  avatar: Joi.string(),
+  //avatar: Joi.string(),
   name: Joi.string().required(),
   userName: Joi.string().required(),
   password: Joi.string().required(),
