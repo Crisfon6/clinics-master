@@ -3,20 +3,14 @@
         <mat-card-title>
             Registrar Clinica
         </mat-card-title>
-        <div id="msg" >  
-            <div *ngIf="message"  class="containerBox" >
-                          
-                    <div  >
-                    {{message}}
-                </div>
-                <div class="cls-btn"
-                     (click)="closeBox(0)"
-    
-                    >
-                    x
-                </div>
+        <div id="msg">
+            <div *ngIf="message" class="containerBox">
+              <div>
+                {{ message }}
+              </div>
+              <div class="cls-btn" (click)="closeBox(1)">x</div>
             </div>
-            </div>
+          </div>
         <mat-card-content>
             <div class="container">
                 <div class="uploadImg">
@@ -24,6 +18,7 @@
                     <img id="imgPhoto" class="imgProfile" [src] ="srcImg">
                 </div>
                     <input 
+                        #imgInput
                         type="file"
                         accept="image/*"
                         (change)="processImg($event)"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { EmployeeService } from '../../services/employee.service';
 @Component({
@@ -18,6 +18,11 @@ export class RegisterEmployeeComponent implements OnInit {
   $boxMessage!: HTMLElement;
   classChange: any;
   classSelected: string;
+  @ViewChild('imgInput')
+  imgImput!: ElementRef;
+  @ViewChild('pdfInput')
+  pdfImput!: ElementRef;
+
 
   constructor(
     private userservice: UserService,
@@ -41,20 +46,14 @@ export class RegisterEmployeeComponent implements OnInit {
     this.employeeData = {};
     this.srcImg = 'assets/img/userPhoto.jpeg';
 
-    let $imgElement =  (<HTMLInputElement>document.getElementById('imgPhoto'))
-
-    if($imgElement){
-       $imgElement.value = ''
-      }
-
- 
+  if(this.imgImput)  this.imgImput.nativeElement.value = null;
+  if(this.pdfImput) this.pdfImput.nativeElement.value = null;
   }
 
   ngOnInit(): void {}
 
   registerEmployee() {
     this.$boxMessage = document.getElementById('msg') as HTMLElement;
-    console.log(this.userData);
     if (
       !this.userData.avatar ||
       !this.userData.name ||
@@ -62,12 +61,12 @@ export class RegisterEmployeeComponent implements OnInit {
       !this.userData.password ||
       !this.userData.email
     ) {
-      console.log('Incomplete data');
       this.message = 'Error: Incomplete data';
       this.classSelected = 'error';
       this.classChange[this.classSelected].forEach((element: any) =>
         this.$boxMessage.classList.toggle(element)
       );
+      this.closeBox(5000);
     } else {
       this.userData.avatar = this.file;
       this.formData.append('name', this.userData.name);
@@ -91,6 +90,7 @@ export class RegisterEmployeeComponent implements OnInit {
                 this.$boxMessage.classList.toggle(element)
               );
               this.startVar()
+              this.closeBox(2000)
             },
             (err) => {
               this.message = 'Error: No se pudo crear empleado';
@@ -98,6 +98,7 @@ export class RegisterEmployeeComponent implements OnInit {
               this.classChange[this.classSelected].forEach((element: any) =>
                 this.$boxMessage.classList.toggle(element)
               );
+              this.closeBox(2000)
             }
           );
         },
@@ -108,6 +109,7 @@ export class RegisterEmployeeComponent implements OnInit {
           this.classChange[this.classSelected].forEach((element: any) =>
             this.$boxMessage.classList.toggle(element)
           );
+          this.closeBox(2000)
         }
       );
     }
@@ -134,7 +136,7 @@ export class RegisterEmployeeComponent implements OnInit {
         );
         this.message = '';
         this.classSelected = '';
-        this.startVar()
+      
       }
     }, time);
   }

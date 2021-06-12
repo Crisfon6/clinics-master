@@ -1,90 +1,79 @@
 <div class="form">
-    <mat-card class="form-card">
-        <mat-card-title>
-            Registrar Administrador
-        </mat-card-title>
-        
-        <div id="msg" >  
-        <div *ngIf="message"  class="containerBox" >
-                      
-                <div  >
-                {{message}}
-            </div>
-            <div class="cls-btn"
-                 (click)="closeBox(0)"
+  <mat-card class="form-card">
+    <mat-card-title> Registrar Administrador </mat-card-title>
 
-                >
-                x
-            </div>
+    <div id="msg">
+      <div *ngIf="message" class="containerBox">
+        <div>
+          {{ message }}
         </div>
+        <div class="cls-btn" (click)="closeBox(0)">x</div>
+      </div>
+    </div>
+    <mat-card-content>
+      <div class="container">
+        <div class="uploadImg">
+          <div>
+            <img id="imgPhoto" class="imgProfile" [src]="srcImg" />
+          </div>
+          <input
+            #imgInput
+            type="file"
+            accept="image/*"
+            (change)="processImg($event)"
+            name="avatar"
+          />
         </div>
-        <mat-card-content>
-            <div class="container">
-                <div class="uploadImg">
-                    <div>
-                    <img id="imgPhoto" class="imgProfile" [src] ="srcImg">
-                </div>
-                    <input 
-                        type="file"
-                        accept="image/*"
-                        (change)="processImg($event)"
-                        name ="avatar">
-                </div>
-                <mat-form-field>
-                    <input
-                    [(ngModel)]="adminData.name"
-                    matInput
-                    placeholder="name"
-                    required
-                    >
-                </mat-form-field>
-                <mat-form-field>
-                    <input
-                    [(ngModel)]="adminData.email"
-                    matInput
-                    placeholder="email"
-                    required
-                    >
-                </mat-form-field>
-                <mat-form-field>
-                    <input
-                    [(ngModel)]="adminData.userName"
-                    matInput
-                    placeholder="user Name"
-                    required
-                    >
-                </mat-form-field>
-                <mat-form-field>
-                    <input
-                    [(ngModel)]="adminData.phone"
-                    matInput
-                    placeholder="phone"
-                    required
-                    >
-                </mat-form-field>
-                <mat-form-field>
-                    <input
-                    [(ngModel)]="adminData.password"
-                    matInput
-                    placeholder="password"
-                    required
-                    >
-                </mat-form-field>
-                
-            </div>
-        </mat-card-content>
-        <mat-card-actions>
-            <button
-            (click) ="registerAdmin()"
-            class="button colorButton"
-            mat-raised-button
-            >
-            Register
-            </button>
-        </mat-card-actions>
-
-    </mat-card>
-    
-
-
+        <mat-form-field>
+          <input
+            [(ngModel)]="adminData.name"
+            matInput
+            placeholder="name"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            [(ngModel)]="adminData.email"
+            matInput
+            placeholder="email"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            [(ngModel)]="adminData.userName"
+            matInput
+            placeholder="user Name"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            [(ngModel)]="adminData.phone"
+            matInput
+            placeholder="phone"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            [(ngModel)]="adminData.password"
+            matInput
+            placeholder="password"
+            required
+          />
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        (click)="registerAdmin()"
+        class="button colorButton"
+        mat-raised-button
+      >
+        Register
+      </button>
+    </mat-card-actions>
+  </mat-card>
 </div>

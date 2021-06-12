@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ClinicService } from '../../services/clinic.service';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-register-clinic',
@@ -13,35 +14,48 @@ export class RegisterClinicComponent implements OnInit {
   file!: File;
   formData = new FormData();
   formDataClinic = new FormData();
-  srcImg: String;
-  message: String;
+  srcImg!: String;
+  message!: String;
   $boxMessage!: HTMLElement;
-  classChange:any;
-  classSelected:string;
+  classChange: any;
+  classSelected!: string;
+  @ViewChild('imgInput')
+  imgImput!: ElementRef;
 
   constructor(
     private userservice: UserService,
     private clinicservice: ClinicService
   ) {
+    this.classChange = {
+      success: ['alert', 'alert-success'],
+      error: ['alert', 'alert-danger'],
+    };
+    this.startVar();
+  }
+
+  ngOnInit(): void {}
+
+  /*Function is used to restart the variables
+  after to send data or when the cycle starts
+*/
+  startVar() {
     this.userData = {
       role: '60c39be0e676d2d66d41a4d4',
     };
 
     this.clinicData = {};
     this.srcImg = 'assets/img/userPhoto.jpeg';
-    this.message = '';
-    this.classChange={
-      success:['alert','alert-success'],
-      error:['alert','alert-danger']
-    }
-    this.classSelected = ''
+
+    if (this.imgImput) this.imgImput.nativeElement.value = null;
   }
 
-  ngOnInit(): void {}
 
+  /*
+    Function to register  clinic, it verifies if 
+    the object is empty and show the message 
+  */
   registerClinic() {
-
-    this.$boxMessage= document.getElementById('msg') as HTMLElement
+    this.$boxMessage = document.getElementById('msg') as HTMLElement;
     if (
       !this.file ||
       !this.userData.name ||
@@ -50,13 +64,17 @@ export class RegisterClinicComponent implements OnInit {
       !this.userData.email
     ) {
       console.log('Incomplete data');
-      this.message ="Error: Incomplete data"
-      this.classSelected="error"    
-      this.classChange[this.classSelected].
-      forEach((element:any) => this.$boxMessage.classList.toggle(element));
+      this.message = 'Error: Incomplete data';
+      this.classSelected = 'error';
+      this.classChange[this.classSelected].forEach((element: any) =>
+        this.$boxMessage.classList.toggle(element)
+      );
+      this.closeBox(5000);
     } else {
-      console.log(this.file);
-
+       /* 
+      We use formdata to send the body because the current object is not
+      able to send images
+      */
       this.formData.append('name', this.userData.name);
       this.formData.append('userName', this.userData.userName);
       this.formData.append('password', this.userData.password);
@@ -66,39 +84,39 @@ export class RegisterClinicComponent implements OnInit {
 
       this.userservice.registerUser(this.formData).subscribe(
         (res: any) => {
-          console.log(res);
           const id = res.idRes;
 
           this.clinicData.userId = id;
           this.clinicservice.registerClinic(this.clinicData).subscribe(
             (res) => {
-              console.log(res);
-              this.message ="Administrador Creado"
-              this.classSelected ="success"
-              this.classChange[this.classSelected].
-              forEach((element:any) => this.$boxMessage.classList.toggle(element));
-              this.userData = {}
-              this.clinicData = {}
+              this.message = 'Administrador Creado';
+              this.classSelected = 'success';
+              this.classChange[this.classSelected].forEach((element: any) =>
+                this.$boxMessage.classList.toggle(element)
+              );
+              this.startVar();
+              this.closeBox(2000);
             },
             (err) => {
-              console.log(err);
-              this.message ="Error: No se pudo crear Clinica"
-              this.classSelected="error"    
-              this.classChange[this.classSelected].
-              forEach((element:any) => this.$boxMessage.classList.toggle(element));
+              this.message = 'Error: No se pudo crear Clinica';
+              this.classSelected = 'error';
+              this.classChange[this.classSelected].forEach((element: any) =>
+                this.$boxMessage.classList.toggle(element)
+              );
+              this.closeBox(2000);
             }
           );
         },
         (err) => {
-          console.log(err);
-          this.message ="Error: No se pudo crear Clinica"
-              this.classSelected="error"    
-              this.classChange[this.classSelected].
-              forEach((element:any) => this.$boxMessage.classList.toggle(element));
+          this.message = 'Error: No se pudo crear Clinica';
+          this.classSelected = 'error';
+          this.classChange[this.classSelected].forEach((element: any) =>
+            this.$boxMessage.classList.toggle(element)
+          );
+          this.closeBox(2000);
         }
       );
     }
-    this.closeBox(5000);
   }
 
   processImg(imageInput: any) {
@@ -110,16 +128,15 @@ export class RegisterClinicComponent implements OnInit {
     };
   }
 
-  closeBox(time:number){
-    setTimeout(()=>{
-      if(this.classSelected){
-      this.classChange[this.classSelected].
-      forEach((element:any) => this.$boxMessage.classList.toggle(element));
-      this.message = '';
-    this.classSelected = ''
-  }
- 
-    },time)
-
+  closeBox(time: number) {
+    setTimeout(() => {
+      if (this.classSelected) {
+        this.classChange[this.classSelected].forEach((element: any) =>
+          this.$boxMessage.classList.toggle(element)
+        );
+        this.message = '';
+        this.classSelected = '';
+      }
+    }, time);
   }
 }

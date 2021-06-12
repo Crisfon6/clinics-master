@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-register-admin',
@@ -9,27 +10,41 @@ export class RegisterAdminComponent implements OnInit {
   adminData: any;
   file!: File;
   formData = new FormData();
-  srcImg: String;
+  srcImg!: String;
   message: String;
   $boxMessage!: HTMLElement;
   classChange: any;
   classSelected: string;
+  @ViewChild('imgInput')
+  imgImput!: ElementRef;
 
   constructor(private userservice: UserService) {
-    this.adminData = {
-      role: '60ba3ebc2d179b23735bead3',
-    };
-
-    this.srcImg = 'assets/img/userPhoto.jpeg';
     this.message = '';
     this.classChange = {
       success: ['alert', 'alert-success'],
       error: ['alert', 'alert-danger'],
     };
     this.classSelected = '';
+    this.starVar();  //function to restart variables
   }
 
   ngOnInit(): void {}
+
+/*Function is used to restart the variables
+  after to send data or when the cycle starts
+*/
+  starVar() {
+    this.adminData = {
+      role: '60ba3ebc2d179b23735bead3',
+    };
+    this.srcImg = 'assets/img/userPhoto.jpeg';
+    if (this.imgImput) this.imgImput.nativeElement.value = null;
+  }
+
+  /*
+    Function to register  the admin, it verifies if 
+    the object is empty and show the message 
+  */
 
   registerAdmin() {
     this.$boxMessage = document.getElementById('msg') as HTMLElement;
@@ -40,14 +55,18 @@ export class RegisterAdminComponent implements OnInit {
       !this.adminData.password ||
       !this.adminData.email
     ) {
-      console.log('Incomplete data');
-
       this.message = 'Error: Incomplete data';
       this.classSelected = 'error';
       this.classChange[this.classSelected].forEach((element: any) =>
         this.$boxMessage.classList.toggle(element)
       );
+
+      this.closeBox(4000); //wait 4000 milisenconds  and close de the box
     } else {
+      /* 
+      We use formdata to send the body because the current object is not
+      able to send images
+      */
       this.formData.append('name', this.adminData.name);
       this.formData.append('userName', this.adminData.userName);
       this.formData.append('password', this.adminData.password);
@@ -57,27 +76,34 @@ export class RegisterAdminComponent implements OnInit {
 
       this.userservice.registerUser(this.formData).subscribe(
         (res) => {
-          console.log(res);
           this.message = 'Administrador Creado';
           this.classSelected = 'success';
+          /* this foreach toggle the respectively classes in classXhange obcject
+          according to classSelected variable
+          */
           this.classChange[this.classSelected].forEach((element: any) =>
             this.$boxMessage.classList.toggle(element)
           );
-          this.adminData = {}
+          this.starVar(); //function to restart form 
+          this.closeBox(4000);
         },
         (err) => {
-          console.log(err);
           this.message = err.error;
           this.classSelected = 'error';
           this.classChange[this.classSelected].forEach((element: any) =>
             this.$boxMessage.classList.toggle(element)
           );
+          this.closeBox(4000);
         }
       );
     }
-    this.closeBox(5000);
   }
 
+  /* 
+  Function to process theinput  images from onchange event
+  and use the info to change property sc in img tag and show the 
+  image
+  */
   processImg(imageInput: any) {
     this.file = imageInput.target.files[0];
     const reader = new FileReader();
@@ -87,13 +113,19 @@ export class RegisterAdminComponent implements OnInit {
     };
   }
 
+  /*Function to manage the message , recieve a number that indicate 
+    the time miliseconds that box will be  shown
+  */
+
   closeBox(time: number) {
     setTimeout(() => {
-      this.classChange[this.classSelected].forEach((element: any) =>
-        this.$boxMessage.classList.toggle(element)
-      );
-      this.message = '';
-      this.classSelected = '';
+      if (this.classSelected) {
+        this.classChange[this.classSelected].forEach((element: any) =>
+          this.$boxMessage.classList.toggle(element)
+        );
+        this.message = '';
+        this.classSelected = '';
+      }
     }, time);
   }
 }
