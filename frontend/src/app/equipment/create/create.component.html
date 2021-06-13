@@ -1,0 +1,117 @@
+<h2>{{title}}</h2>
+
+<form [formGroup]="form">
+
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="name">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Definicion</mat-label>
+            <textarea matInput formControlName="definition"></textarea>
+
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Marca</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="brand">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Modelo</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="modelEquip">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Serie</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="serie">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Peso</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="weight" type="number">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Proveedor</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="provider">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Registro invima</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="invimaReg">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Ciclo de vida</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="usefulLife" type="number">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>No. Invima</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="noInvima">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Largo</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="length" type="number">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Ancho</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="width" type="number">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Profundidad</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="depth" type="number">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p>
+    <p>
+        <input type="file" #UploadFileInput id="fileUpload" (change)="fileChangeEvent($event)" name="fileUpload" multiple="single" accept=".pdf" formControlName='photo' /> </p>
+    <!-- <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Profundidad</mat-label>
+            <input matInput placeholder="Placeholder" formControlName="depth" type="number">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+    </p> -->
+
+    <div class="col">
+        <a mat-raised-button color="primary" [disabled]="!form.valid" (click)="ObSubmit()">Crear</a>
+    </div>
+
+</form>
+<p>
+    {{form.value | json}}
+</p>
+<!-- <p>
+        <input type="file" #UploadFileInput id="fileUpload" (change)="fileChangeEvent($event)" name="fileUpload" multiple="single" accept=".pdf" formControlName='CV' /> </p> -->
